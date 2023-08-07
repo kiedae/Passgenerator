@@ -1,32 +1,35 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
-// Recommend making variables for characters an array of strings as this is easier to manage!
+// Arrays of strings for characters to include
 var numberCharacters = ['0','1','2','3','4','5','6','7','8','9'];
 var lowercaseCharacters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 var uppercaseCharacters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 var specialCharacters = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "+", "-", ".", "`", "~", "|", "<", ">", "=", "-", "_"]
 
+// prompt user to select password length, and what characters to include
 function promptUser() {
   var passwordLength = parseInt(prompt('How many characters would you like your password length to contain?'));
-    
-  if (parseInt == isNaN) {
+  
+// is length is not a number return null,
+  if (isNaN(passwordLength)) {
     alert('Password length must be a number.');
     return null;
-}
-
+  }
+// password length must be greater than 8
   if (passwordLength < 8) {
     alert('Password length needs to be at least 8 characters in length');
     return null;
   }
-
+ // length must be less than 128
   if (passwordLength > 128) {
     alert('Password length cannot exceed 128 characters in length.');
     return null;
 }
+
  
 
-
+// asks the user to include or not include strings
   var hasNumbers = confirm('Click OK to confirm you would like your password to include numbers!');
 
   var hasUppercase = confirm('Click OK to confirm you would like your password to include uppercase letters.');
@@ -37,16 +40,32 @@ function promptUser() {
   
 
   
-  console.log(passwordLength);
+ console.log(passwordLength);
   console.log(hasNumbers);
   console.log(hasUppercase);
   console.log(hasLowercase);
   console.log(hasSpecial);
+
+  // Stores User Input into options variable
+  var options = {
+    passwordLength: passwordLength,
+    hasNumbers: hasNumbers,
+    hasLowercase: hasLowercase,
+    hasUppercase: hasUppercase,
+    hasSpecial: hasSpecial
+  
+  };
+  
+  return options;
+
 }
+
+
 
 function generatePassword () {
   var options = promptUser();
   console.log(options)
+  
 }
 
 // Write password to the #password input
@@ -55,6 +74,8 @@ function writePassword() {
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
+  
+
 
 }
 
