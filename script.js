@@ -65,7 +65,23 @@ function promptUser() {
 function generatePassword () {
   var options = promptUser();
   console.log(options)
-  
+  var rlow = Math.floor(Math.random() * lowercaseCharacters.length);
+  var rup = Math.floor(Math.random() * uppercaseCharacters.length);
+  var rspec = Math.floor(Math.random() * specialCharacters.length);
+  var rnumbs = Math.floor(Math.random() * numberCharacters.length);
+  if (options.hasLowercase === true) {
+    lowercaseCharacters[rlow];
+  }
+  if (options.hasNumbers === true) {
+    numberCharacters[rnumbs];
+  }
+  if (options.hasUppercase === true) {
+    uppercaseCharacters[rup];
+  }
+  if (options.hasSpecial === true) {
+    specialCharacters[rspec];
+  }
+
 }
 
 // Write password to the #password input
