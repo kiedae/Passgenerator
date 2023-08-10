@@ -1,56 +1,38 @@
-// Assignment Code
 var generateBtn = document.querySelector("#generate");
-
-// Arrays of strings for characters to include
+// arrays for all char types
 var numberCharacters = ['0','1','2','3','4','5','6','7','8','9'];
 var lowercaseCharacters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 var uppercaseCharacters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 var specialCharacters = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "+", "-", ".", "`", "~", "|", "<", ">", "=", "-", "_"]
 
- 
-
-// prompt user to select password length, and what characters to include
 function promptUser() {
+  // promps user to input password length
   var passwordLength = parseInt(prompt('How many characters would you like your password length to contain?'));
-  
-// is length is not a number return null,
+  // if not a number cancels the next user prompts
   if (isNaN(passwordLength)) {
     alert('Password length must be a number.');
     return null;
   }
-// password length must be greater than 8
+  // if not valid password length cancels the next user promts
   if (passwordLength < 8) {
     alert('Password length needs to be at least 8 characters in length');
     return null;
   }
- // length must be less than 128
   if (passwordLength > 128) {
     alert('Password length cannot exceed 128 characters in length.');
     return null;
-}
-
- 
-
-// asks the user to include or not include strings
-function options() { }
-
+  }
+// prompting users for included password types
   var hasNumbers = confirm('Click OK to confirm you would like your password to include numbers!');
-
   var hasUppercase = confirm('Click OK to confirm you would like your password to include uppercase letters.');
-  
-  var hasLowercase = confirm('Click ok if you would like your password to include lowercase letters.');
-  
+  var hasLowercase = confirm('Click OK if you would like your password to include lowercase letters.');
   var hasSpecial = confirm('Click OK to confirm you would like to have your password include special characters.');
-  
-
-
-  
- console.log(passwordLength);
-  console.log(hasNumbers);
-  console.log(hasUppercase);
-  console.log(hasLowercase);
-  console.log(hasSpecial);
-  
+// if atleast one char type isnt included, prevents the code from going further
+  if (!hasLowercase && !hasUppercase && !hasSpecial && !hasNumbers) {
+    alert("Please try again, you must include at least one character type");
+    return null;
+  }
+  // compacts the user's choices into an object
   var options = {
     passwordLength: passwordLength,
     hasNumbers: hasNumbers,
@@ -59,37 +41,46 @@ function options() { }
     hasSpecial: hasSpecial
   };
 
+  return options;
 }
 
-
-
-function generatePassword () {
+function generatePassword() {
   var options = promptUser();
-  console.log(options)
-  // Creates an empty string until for loop randomizes the characters and feeds it into the string
-  var password = '';
-  for (i = 0; i < passwordLength; i++) {
-    var randomIndex = Math.floor(Math.random() * max);
-    password += options[randomIndex];
+  //  creates an array to store all the slected chars
+  var selectedCharacters = [];
+// compacts all chosen characters into one array
+  if (options.hasLowercase) {
+    selectedCharacters = selectedCharacters.concat(lowercaseCharacters);
   }
+  if (options.hasUppercase) {
+    selectedCharacters = selectedCharacters.concat(uppercaseCharacters);
   }
+  if (options.hasSpecial) {
+    selectedCharacters = selectedCharacters.concat(specialCharacters);
+  }
+  if (options.hasNumbers) {
+    selectedCharacters = selectedCharacters.concat(numberCharacters);
+  }
+// creates the password
+  var password = "";
+  // loop to choose random chars from user's chosen char types
+  for (var i = 0; i < options.passwordLength; i++) {
+    var randomIndex = Math.floor(Math.random() * selectedCharacters.length);
+    // adds the random character into the password variable
+    password += selectedCharacters[randomIndex];
+  }
+  // stores the password once loop is done
+return password;
+}
+
  
-  
-
-
-
-
-
-// Write password to the #password input
 function writePassword() {
-  // var password = generatePassword();
+  // calls the function to generate the password
+  var password = generatePassword();
+  // prints the password to the password box in html
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
-  
-
-
 }
-
-// Add event listener to generate button
+// listens to see when the user clicks the generate button to run all the code before this
 generateBtn.addEventListener("click", writePassword);
