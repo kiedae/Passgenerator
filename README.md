@@ -10,3 +10,8 @@ The user selects what to include, the included character types are then funneled
 
 ## Picture of the site ## 
 ![Alt text](image-2.png)
+
+
+## Out Sourced Code Used ##
+
+Some code was given to me by ASK BCS assistant, the parseint and first array along with the first conditional for password length < 8. 
